@@ -1,7 +1,4 @@
 package testCases;
-
-
-import jdk.dynalink.StandardNamespace;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.OutputType;
@@ -37,13 +34,14 @@ public class BaseClass {
         if (br.equals("chrome")) {
             System.setProperty("webdriver.chrome.driver", readConfig.getChromePath());
             driver = new ChromeDriver();
-        }else if(br.equals("firefox")){
+        } else if (br.equals("firefox")) {
             System.setProperty("webdriver.chrome.driver", readConfig.getChromePath());
             driver = new ChromeDriver();
-        }else if(br.equals("ie")){
+        } else if (br.equals("ie")) {
             System.setProperty("webdriver.chrome.driver", readConfig.getChromePath());
             driver = new ChromeDriver();
         }
+        driver.manage().window().maximize();
         driver.get(baseURL);
 
     }
@@ -53,11 +51,12 @@ public class BaseClass {
     public void tearDown() {
         driver.quit();
     }
-    public void captureScreen(WebDriver driver,String tname) throws IOException{
-        TakesScreenshot ts=(TakesScreenshot) driver;
-        File source =ts.getScreenshotAs(OutputType.FILE);
-        File target =new File(System.getProperty("user.dir")+"/Screenshots/"+ tname+".png");
-        FileUtils.copyFile(source,target);
+
+    public void captureScreen(WebDriver driver, String tname) throws IOException {
+        TakesScreenshot ts = (TakesScreenshot) driver;
+        File source = ts.getScreenshotAs(OutputType.FILE);
+        File target = new File(System.getProperty("user.dir") + "/Screenshots/" + tname + ".png");
+        FileUtils.copyFile(source, target);
         System.out.println("Screenshot taken");
     }
 }

@@ -1,5 +1,11 @@
 package testCases;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -8,11 +14,22 @@ import utilities.XLUtils;
 import org.openqa.selenium.NoAlertPresentException;
 
 import java.io.IOException;
+import java.time.Duration;
 
 public class TC_LoginDDT_002 extends BaseClass{
     @Test(dataProvider="LoginData")
-    public void loginDDT(String email,String pwd) throws InterruptedException
+    public void loginDDT(String email, String pwd) throws InterruptedException
     {
+           loginCredentials(email,pwd);
+           logger.info("Login passed");
+           Assert.assertTrue(true);
+           Thread.sleep(5000);
+            WebElement svgObj = driver.findElement(By.cssSelector("svg.i8zpp7h3"));
+            Actions actionBuilder = new Actions(driver);
+            actionBuilder.click(svgObj).build().perform();
+            new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Log Out')]"))).click();
+    }
+    public void loginCredentials(String email,String pwd) throws InterruptedException {
         LoginPage lp=new LoginPage(driver);
         lp.setEmail(email);
         logger.info("email provided");
@@ -20,40 +37,15 @@ public class TC_LoginDDT_002 extends BaseClass{
         logger.info("password provided");
         lp.clickSubmit();
 
-        Thread.sleep(3000);
-
-        if(isAlertPresent()==true)
-        {
-//            driver.switchTo().alert().accept();//close alert
-//            driver.switchTo().defaultContent();
-            Assert.assertFalse(false);
-            logger.warn("Login failed");
-        }
-        else
-        {
-            Assert.assertTrue(true);
-            logger.info("Login passed");
-//            lp.clickLogout();
-            Thread.sleep(3000);
-//            driver.switchTo().alert().accept();//close logout alert
-//            driver.switchTo().defaultContent();
-
-        }
-
-
     }
     public boolean isAlertPresent() //user defined method created to check alert is present or not
     {
-        try
-        {
+        try {
             driver.switchTo().alert();
             return true;
-        }
-        catch(NoAlertPresentException e)
-        {
+        } catch(NoAlertPresentException e) {
             return false;
         }
-
     }
     @DataProvider(name="LoginData")
     Object[][] getData() throws IOException{

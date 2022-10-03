@@ -38,7 +38,7 @@ public class Reporting extends TestListenerAdapter {
         extent.setSystemInfo("Environemnt","QA");
         extent.setSystemInfo("user","Suraj");
 
-        htmlReporter.config().setDocumentTitle("InetBanking Test Project"); // Title of report
+        htmlReporter.config().setDocumentTitle("FaceBook Test Project"); // Title of report
         htmlReporter.config().setReportName("Facebook Functional Test Automation Report"); // name of the report
 //        htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP); //location of the chart
         htmlReporter.config().setTheme(Theme.DARK);
